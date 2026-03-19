@@ -7,134 +7,93 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        tailwind.config = {
-            theme: { extend: { colors: { primary: '#165DFF', light: '#F5F7FA', dark: '#1D2129' } } }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities { .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.06); } .section-padding { padding: 5rem 0; } }
-    </style>
 </head>
-<body class="bg-white font-sans">
+<body class="bg-white m-0 p-0 font-sans">
 
-<header class="sticky top-0 bg-white shadow z-50">
-    <div class="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between">
-        <div class="text-xl font-bold text-primary"><i class="fas fa-chart-line mr-2"></i>东南亚造价咨询</div>
-        <div class="flex gap-2">
-            <button id="zh" class="lang-btn px-3 py-1.5 bg-primary text-white rounded">中文</button>
-            <button id="en" class="lang-btn px-3 py-1.5 bg-gray-200 hover:bg-primary hover:text-white rounded">English</button>
-            <button id="th" class="lang-btn px-3 py-1.5 bg-gray-200 hover:bg-primary hover:text-white rounded">ไทย</button>
-            <button id="kh" class="lang-btn px-3 py-1.5 bg-gray-200 hover:bg-primary hover:text-white rounded">ភាសាខ្មែរ</button>
+<!-- 导航 -->
+<div class="bg-white shadow p-4 flex justify-between items-center max-w-6xl mx-auto">
+    <div class="text-lg font-bold text-blue-600">东南亚造价咨询</div>
+    <div class="flex gap-2">
+        <button onclick="show('zh')" class="px-3 py-1 bg-blue-600 text-white rounded">中文</button>
+        <button onclick="show('en')" class="px-3 py-1 bg-gray-200 rounded">English</button>
+        <button onclick="show('th')" class="px-3 py-1 bg-gray-200 rounded">ไทย</button>
+        <button onclick="show('kh')" class="px-3 py-1 bg-gray-200 rounded">ខ្មែរ</button>
+    </div>
+</div>
+
+<!-- 内容 -->
+<div class="max-w-6xl mx-auto p-4">
+    <!-- 关于我们 -->
+    <div class="my-10 p-6 bg-gray-50 rounded-xl">
+        <h2 class="text-2xl font-bold mb-4" id="about">关于我们</h2>
+        <p id="about_text">我们专注东南亚造价咨询、合约管控、风险控制，服务一带一路项目。</p>
+    </div>
+
+    <!-- 服务 -->
+    <div class="grid md:grid-cols-3 gap-4 mb-10">
+        <div class="p-6 bg-white rounded-xl shadow">
+            <i class="fas fa-calculator text-blue-600 text-2xl mb-2"></i>
+            <h5 id="s1">造价咨询</h5>
+        </div>
+        <div class="p-6 bg-white rounded-xl shadow">
+            <i class="fas fa-file-contract text-blue-600 text-2xl mb-2"></i>
+            <h5 id="s2">合约管控</h5>
+        </div>
+        <div class="p-6 bg-white rounded-xl shadow">
+            <i class="fas fa-globe-asia text-blue-600 text-2xl mb-2"></i>
+            <h5 id="s3">本地化服务</h5>
         </div>
     </div>
-</header>
 
-<section class="section-padding bg-light">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold" lang="zh">关于我们</h2>
-            <h2 class="text-3xl font-bold hidden" lang="en">About Us</h2>
-            <h2 class="text-3xl font-bold hidden" lang="th">เกี่ยวกับเรา</h2>
-            <h2 class="text-3xl font-bold hidden" lang="kh">អំពីយើង</h2>
-        </div>
-        <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl card-shadow">
-            <p lang="zh">我们专注东南亚造价咨询、合约管控、风险控制，服务一带一路基建与地产项目。</p>
-            <p class="hidden" lang="en">We specialize in cost consulting, contract management and risk control in Southeast Asia.</p>
-            <p class="hidden" lang="th">เราเชี่ยวชาญด้านการปรึกษาต้นทุน การจัดการสัญญา และการควบคุมความเสี่ยงในอาเซียน</p>
-            <p class="hidden" lang="kh">យើងឯកទេសក្នុងការប្រឹក្សាតម្លៃ គ្រប់គ្រងកិច្ចសន្យា និងគ្រប់គ្រងហានិភ័យនៅអាស៊ីអាគ្នេយ៍</p>
-        </div>
+    <!-- 图表 -->
+    <div class="p-6 bg-white rounded-xl shadow mb-10">
+        <h3 class="text-xl font-bold mb-4" id="market">市场数据</h3>
+        <canvas id="chart" height="250"></canvas>
     </div>
-</section>
 
-<section class="section-padding">
-    <div class="container mx-auto px-4 text-center mb-10">
-        <h3 class="text-2xl font-bold" lang="zh">核心服务</h3>
-        <h3 class="text-2xl font-bold hidden" lang="en">Services</h3>
-        <h3 class="text-2xl font-bold hidden" lang="th">บริการหลัก</h3>
-        <h3 class="text-2xl font-bold hidden" lang="kh">សេវាកម្មសំខាន់</h3>
+    <!-- 联系 -->
+    <div class="p-6 bg-gray-50 rounded-xl text-center mb-10">
+        <h3 class="text-xl font-bold mb-2" id="contact">联系我们</h3>
+        <p id="contact_text">邮箱：contact@example.com</p>
     </div>
-    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-        <div class="p-6 bg-light rounded-xl card-shadow text-center">
-            <i class="fas fa-calculator text-3xl text-primary mb-3"></i>
-            <h4 lang="zh">造价咨询</h4>
-            <h4 class="hidden" lang="en">Cost Consulting</h4>
-            <h4 class="hidden" lang="th">ปรึกษาต้นทุน</h4>
-            <h4 class="hidden" lang="kh">ប្រឹក្សាតម្លៃ</h4>
-        </div>
-        <div class="p-6 bg-light rounded-xl card-shadow text-center">
-            <i class="fas fa-file-contract text-3xl text-primary mb-3"></i>
-            <h4 lang="zh">合约管控</h4>
-            <h4 class="hidden" lang="en">Contract</h4>
-            <h4 class="hidden" lang="th">จัดการสัญญา</h4>
-            <h4 class="hidden" lang="kh">គ្រប់គ្រងកិច្ចសន្យា</h4>
-        </div>
-        <div class="p-6 bg-light rounded-xl card-shadow text-center">
-            <i class="fas fa-globe-asia text-3xl text-primary mb-3"></i>
-            <h4 lang="zh">本地化服务</h4>
-            <h4 class="hidden" lang="en">Local Service</h4>
-            <h4 class="hidden" lang="th">บริการท้องถิ่น</h4>
-            <h4 class="hidden" lang="kh">សេវាកម្មក្នុងស្រុក</h4>
-        </div>
-    </div>
-</section>
+</div>
 
-<section class="section-padding bg-light">
-    <div class="container mx-auto px-4 text-center mb-10">
-        <h3 class="text-2xl font-bold" lang="zh">市场数据</h3>
-        <h3 class="hidden" lang="en">Market Data</h3>
-        <h3 class="hidden" lang="th">ข้อมูลตลาด</h3>
-        <h3 class="hidden" lang="kh">ទិន្នន័យទីផ្សារ</h3>
-    </div>
-    <div class="max-w-5xl mx-auto p-6 bg-white rounded-xl card-shadow">
-        <canvas id="chart"></canvas>
-    </div>
-</section>
-
-<section class="section-padding">
-    <div class="container mx-auto px-4 text-center mb-10">
-        <h3 class="text-2xl font-bold" lang="zh">联系我们</h3>
-        <h3 class="hidden" lang="en">Contact Us</h3>
-        <h3 class="hidden" lang="th">ติดต่อเรา</h3>
-        <h3 class="hidden" lang="kh">ទំនាក់ទំនងយើង</h3>
-    </div>
-    <div class="max-w-xl mx-auto p-6 bg-light rounded-xl card-shadow text-center">
-        <p lang="zh">邮箱: contact@example.com</p>
-        <p class="hidden" lang="en">Email: contact@example.com</p>
-        <p class="hidden" lang="th">อีเมล: contact@example.com</p>
-        <p class="hidden" lang="kh">អ៊ីមែល: contact@example.com</p>
-    </div>
-</section>
-
-<footer class="bg-dark text-white py-6 text-center">
-    <p lang="zh">© 2026 东南亚造价咨询</p>
-    <p class="hidden" lang="en">© 2026 SEA Cost Consulting</p>
-    <p class="hidden" lang="th">© 2026 ปรึกษาต้นทุนอาเซียน</p>
-    <p class="hidden" lang="kh">© 2026 ការប្រឹក្សាតម្លៃអាស៊ីអាគ្នេយ៍</p>
-</footer>
+<!-- 底部 -->
+<div class="bg-gray-800 text-white p-4 text-center">
+    <span id="footer">© 2026 东南亚造价咨询</span>
+</div>
 
 <script>
-const btns = document.querySelectorAll('.lang-btn');
-function setLang(l) {
-    document.querySelectorAll('[lang]').forEach(e => e.classList.add('hidden'));
-    document.querySelectorAll(`[lang=${l}]`).forEach(e => e.classList.remove('hidden'));
-    btns.forEach(b => b.classList.remove('bg-primary','text-white'));
-    document.getElementById(l).classList.add('bg-primary','text-white');
+// 多语言
+const lang = {
+    zh: { about:"关于我们", about_text:"我们专注东南亚造价咨询、合约管控、风险控制，服务一带一路项目。", s1:"造价咨询", s2:"合约管控", s3:"本地化服务", market:"市场数据", contact:"联系我们", contact_text:"邮箱：contact@example.com", footer:"© 2026 东南亚造价咨询" },
+    en: { about:"About Us", about_text:"We provide cost consulting, contract management in Southeast Asia.", s1:"Cost Consulting", s2:"Contract Management", s3:"Local Service", market:"Market Data", contact:"Contact Us", contact_text:"Email: contact@example.com", footer:"© 2026 SEA Cost Consulting" },
+    th: { about:"เกี่ยวกับเรา", about_text:"เราให้บริการปรึกษาต้นทุนและจัดการสัญญา", s1:"ปรึกษาต้นทุน", s2:"จัดการสัญญา", s3:"บริการท้องถิ่น", market:"ข้อมูลตลาด", contact:"ติดต่อเรา", contact_text:"อีเมล: contact@example.com", footer:"© 2026 ปรึกษาต้นทุนอาเซียน" },
+    kh: { about:"អំពីយើង", about_text:"យើងផ្តល់សេវាប្រឹក្សាតម្លៃនិងគ្រប់គ្រងកិច្ចសន្យា", s1:"ប្រឹក្សាតម្លៃ", s2:"គ្រប់គ្រងកិច្ចសន្យា", s3:"សេវាកម្មក្នុងស្រុក", market:"ទិន្នន័យទីផ្សារ", contact:"ទំនាក់ទំនងយើង", contact_text:"អ៊ីមែល: contact@example.com", footer:"© 2026 ការប្រឹក្សាតម្លៃអាស៊ីអាគ្នេយ៍" }
+};
+function show(l) {
+    document.getElementById("about").innerText = lang[l].about;
+    document.getElementById("about_text").innerText = lang[l].about_text;
+    document.getElementById("s1").innerText = lang[l].s1;
+    document.getElementById("s2").innerText = lang[l].s2;
+    document.getElementById("s3").innerText = lang[l].s3;
+    document.getElementById("market").innerText = lang[l].market;
+    document.getElementById("contact").innerText = lang[l].contact;
+    document.getElementById("contact_text").innerText = lang[l].contact_text;
+    document.getElementById("footer").innerText = lang[l].footer;
 }
-btns.forEach(b => b.onclick = () => setLang(b.id));
-setLang('zh');
 
+// 图表
 new Chart(document.getElementById("chart"),{
     type:"bar",
     data:{
-        labels:["泰国","柬埔寨","老挝","越南","马来西亚"],
+        labels:["Thailand","Cambodia","Laos","Vietnam","Malaysia"],
         datasets:[{
-            label:"市场规模（亿美元）",
+            label:"Market Size (M$)",
             data:[34,15,6,22,18],
-            backgroundColor:"#165DFF88"
+            backgroundColor:"#3b82f6"
         }]
-    },
-    options:{responsive:true}
+    }
 });
 </script>
 </body>
