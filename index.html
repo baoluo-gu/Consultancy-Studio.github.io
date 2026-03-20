@@ -1,36 +1,160 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<title>东南亚造价咨询</title>
-<style>
-body {
-    background: white;
-    font-family: Arial;
-    padding: 40px;
-    text-align: center;
-}
-.box {
-    background: #f5f5f5;
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-h1 {
-    color: #0052cc;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>东南亚造价咨询服务</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        light: '#F5F7FA',
+                        dark: '#1D2129',
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+            .section-padding { padding: 3rem 0; }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-white font-sans">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 bg-white shadow z-50">
+        <div class="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between">
+            <div class="text-xl font-bold text-primary">
+                <i class="fas fa-chart-line mr-2"></i>东南亚造价咨询
+            </div>
+            <div class="flex gap-2">
+                <button id="lang-zh" class="px-3 py-1.5 bg-primary text-white rounded">中文</button>
+                <button id="lang-en" class="px-3 py-1.5 bg-gray-200 hover:bg-primary hover:text-white rounded">English</button>
+                <button id="lang-th" class="px-3 py-1.5 bg-gray-200 hover:bg-primary hover:text-white rounded">ไทย</button>
+                <button id="lang-kh" class="px-3 py-1.5 bg-gray-200 hover:bg-primary hover:text-white rounded">ភាសាខ្មែរ</button>
+            </div>
+        </div>
+    </header>
 
-<div class="box">
-    <h1>东南亚造价咨询服务</h1>
-    <p>我们专注东南亚工程造价、合约管控、本地化咨询。</p>
-    <p>邮箱：contact@example.com</p>
-    <p>地址：柬埔寨金边</p>
-</div>
+    <!-- 关于我们 -->
+    <section class="section-padding bg-light">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl card-shadow text-center">
+                <h2 class="text-2xl font-bold mb-4" data-lang="about">关于我们</h2>
+                <h2 class="text-2xl font-bold mb-4 hidden" data-lang="about-en">About Us</h2>
+                <p class="mb-4" data-lang="about-text">我们专注东南亚造价咨询、合约管控、风险控制，服务一带一路基建与地产项目。</p>
+                <p class="mb-4 hidden" data-lang="about-text-en">We specialize in cost consulting, contract management and risk control in Southeast Asia.</p>
+                <p data-lang="contact-email">邮箱：contact@example.com</p>
+                <p class="hidden" data-lang="contact-email-en">Email: contact@example.com</p>
+                <p class="mt-2" data-lang="contact-address">地址：柬埔寨金边</p>
+                <p class="mt-2 hidden" data-lang="contact-address-en">Address: Phnom Penh, Cambodia</p>
+            </div>
+        </div>
+    </section>
 
+    <!-- 核心服务 -->
+    <section class="section-padding">
+        <div class="container mx-auto px-4">
+            <h3 class="text-xl font-bold text-center mb-6" data-lang="service">核心服务</h3>
+            <h3 class="text-xl font-bold text-center mb-6 hidden" data-lang="service-en">Core Services</h3>
+            <div class="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+                <div class="bg-light p-4 rounded-xl card-shadow text-center">
+                    <i class="fas fa-calculator text-primary text-2xl mb-2"></i>
+                    <h4 data-lang="s1">造价咨询</h4>
+                    <h4 class="hidden" data-lang="s1-en">Cost Consulting</h4>
+                </div>
+                <div class="bg-light p-4 rounded-xl card-shadow text-center">
+                    <i class="fas fa-file-contract text-primary text-2xl mb-2"></i>
+                    <h4 data-lang="s2">合约管控</h4>
+                    <h4 class="hidden" data-lang="s2-en">Contract Management</h4>
+                </div>
+                <div class="bg-light p-4 rounded-xl card-shadow text-center">
+                    <i class="fas fa-globe-asia text-primary text-2xl mb-2"></i>
+                    <h4 data-lang="s3">本地化服务</h4>
+                    <h4 class="hidden" data-lang="s3-en">Local Service</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 市场数据图表 -->
+    <section class="section-padding bg-light">
+        <div class="container mx-auto px-4">
+            <h3 class="text-xl font-bold text-center mb-6" data-lang="market">市场数据</h3>
+            <h3 class="text-xl font-bold text-center mb-6 hidden" data-lang="market-en">Market Data</h3>
+            <div class="max-w-4xl mx-auto bg-white p-4 rounded-xl card-shadow">
+                <canvas id="marketChart" height="200"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-4 text-center">
+        <p data-lang="footer">© 2026 东南亚造价咨询服务</p>
+        <p class="hidden" data-lang="footer-en">© 2026 SEA Cost Consulting Service</p>
+    </footer>
+
+    <script>
+        // 四语切换逻辑
+        const langElements = document.querySelectorAll("[data-lang]");
+        function switchLanguage(lang) {
+            langElements.forEach(el => {
+                el.classList.add("hidden");
+                if (el.getAttribute("data-lang") === "about-" + lang ||
+                    el.getAttribute("data-lang") === "about-text-" + lang ||
+                    el.getAttribute("data-lang") === "service-" + lang ||
+                    el.getAttribute("data-lang") === "s1-" + lang ||
+                    el.getAttribute("data-lang") === "s2-" + lang ||
+                    el.getAttribute("data-lang") === "s3-" + lang ||
+                    el.getAttribute("data-lang") === "market-" + lang ||
+                    el.getAttribute("data-lang") === "contact-email-" + lang ||
+                    el.getAttribute("data-lang") === "contact-address-" + lang ||
+                    el.getAttribute("data-lang") === "footer-" + lang ||
+                    (el.getAttribute("data-lang") === "about" && lang === "zh") ||
+                    (el.getAttribute("data-lang") === "about-text" && lang === "zh") ||
+                    (el.getAttribute("data-lang") === "service" && lang === "zh") ||
+                    (el.getAttribute("data-lang") === "s1" && lang === "zh") ||
+                    (el.getAttribute("data-lang") === "s2" && lang === "zh") ||
+                    (el.getAttribute("data-lang") === "s3" && lang === "zh") ||
+                    (el.getAttribute("data-lang") === "market" && lang === "zh") ||
+                    (el.getAttribute("data-lang") === "contact-email" && lang === "zh") ||
+                    (el.getAttribute("data-lang") === "contact-address" && lang === "zh") ||
+                    (el.getAttribute("data-lang") === "footer" && lang === "zh")) {
+                    el.classList.remove("hidden");
+                }
+            });
+            document.querySelectorAll("button").forEach(btn => {
+                btn.classList.remove("bg-primary", "text-white");
+                btn.classList.add("bg-gray-200");
+            });
+            document.getElementById("lang-" + lang).classList.add("bg-primary", "text-white");
+        }
+        document.getElementById("lang-zh").addEventListener("click", () => switchLanguage("zh"));
+        document.getElementById("lang-en").addEventListener("click", () => switchLanguage("en"));
+        document.getElementById("lang-th").addEventListener("click", () => switchLanguage("th"));
+        document.getElementById("lang-kh").addEventListener("click", () => switchLanguage("kh"));
+        switchLanguage("zh");
+
+        // 市场数据图表
+        new Chart(document.getElementById("marketChart"), {
+            type: "bar",
+            data: {
+                labels: ["泰国", "柬埔寨", "老挝", "越南", "马来西亚"],
+                datasets: [{
+                    label: "市场规模（亿美元）",
+                    data: [34, 15, 6, 22, 18],
+                    backgroundColor: "rgba(22, 93, 255, 0.7)"
+                }]
+            },
+            options: { responsive: true }
+        });
+    </script>
 </body>
 </html>
-
